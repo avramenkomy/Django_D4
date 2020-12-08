@@ -1,0 +1,51 @@
+Добро пожаловать в "{{ title }}".<br>
+Тут собрано {{ books|length }} книг из личной коллекции.
+
+<table border=1>
+    <thead>
+        <tr>
+            <td>№п/п</td>
+            <td>Название книги</td>
+            <td>ISBN</td>
+            <td>Краткое описание</td>
+            <td>Дата публикации</td>
+            <td>Автор</td>
+            <td>Страна происхождения</td>
+            <td>Кол-во</td>
+            <td>Изменить кол-во</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.ISBN }}</td>
+                <td>{{ book.description }}</td>
+                <td>{{ book.year_release }}</td>
+                <td>{{ book.author.full_name }}</td>
+                <td>{{ book.author.country }}</td>
+                <td>{{ book.copy_count }}</td>
+                <td>
+                    <form action="/index/book_increment/" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ book.id }}" />
+                        <input type="submit" value="Увеличить" />
+                    </form>
+                    <form action="/index/book_decrement/" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ book.id }}" />
+                        <input type="submit" value="Уменьшить" />
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{#<div>#}
+{#    {% for num in numbers_list %}#}
+{#        {% if num|divisibleby:"3" %}#}
+{#            <span>{{ num }}</span>#}
+{#        {% endif %}#}
+{#    {% endfor %}#}
+{#</div>#}

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load bootstrap3 %}
+    {% bootstrap_javascript %}
+    {% bootstrap_css %}
+    <title>publish_list</title>
+</head>
+<body>
+    <h3>Сортировка книг по издательствам</h3>
+    {% for key, value in pub_data.items %}
+        <h4>{{ key }}</h4>
+        <ul class="list-group list">
+            {% for book in value %}
+                <li class="list-group-item">
+                    {{ book }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+    <script src="{% bootstrap_jquery_url %}"></script>
+</body>
+</html>
